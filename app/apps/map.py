@@ -28,16 +28,16 @@ filter_div = html.Div(
     )],
     id='filter-div')
 
-graph = dcc.Graph(id='graph')
+map_graph = dcc.Graph(id='map')
 
 layout = html.Div(
     [filter_div,
-     graph]
+     map_graph]
 )
 
 
 @app.callback(
-    Output('graph', 'figure'),
+    Output('map', 'figure'),
     [Input('filter-years', 'value'),
      Input('filter-variable', 'value')])
 def update_figure(year, column_name):
@@ -50,7 +50,7 @@ def update_figure(year, column_name):
                         locationmode='USA-states')
     fig.update_layout(
         title={'text': title, 'font': {'size': 30}},
-        geo_scope='usa',  # Plot only the USA instead of globe
+        geo_scope='usa',
         margin={"r": 0, "t": 60, "l": 0, "b": 0}
     )
     return fig
