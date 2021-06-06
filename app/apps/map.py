@@ -11,7 +11,7 @@ from app import app
 
 df = pd.read_csv('assets/honeyproduction.csv')
 years = df['year'].unique()
-variables = df.columns.drop(['year', 'state'])
+column_names = df.columns.drop(['year', 'state'])
 
 filter_div = html.Div(
     [dcc.Dropdown(
@@ -22,7 +22,7 @@ filter_div = html.Div(
     ), dcc.RadioItems(
         id='filter-variable',
         options=[
-            {'label': i, 'value': i} for i in variables
+            {'label': i, 'value': i} for i in column_names
         ],
         value='totalprod',
     )],

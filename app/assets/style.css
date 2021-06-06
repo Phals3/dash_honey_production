@@ -61,7 +61,7 @@ th .dash_filter {
     margin: auto;
 }
 
-#filter-years {
+.filter-years {
     color: black;
 }
 
@@ -80,5 +80,26 @@ th .dash_filter {
     margin: auto;
     width: 80vw;
     height: 70vh;
+    color: black;
+}
+
+
+/* PLOTS */
+
+#dropdowns {
+    border-bottom: thin lightgrey solid;
+    background-color: rgb(250, 250, 250);
+    padding: 10px 5px;
+}
+
+#filter-columns1 {
+    width: 49%;
+    display: inline-block;
+    color: black;
+}
+
+#filter-columns2 {
+    width: 49%;
+    display: inline-block;
     color: black;
 }
