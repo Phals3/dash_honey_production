@@ -7,7 +7,7 @@ import pandas as pd
 
 
 def DataTable():
-    df = pd.read_csv('honeyproduction.csv')
+    df = pd.read_csv('assets/honeyproduction.csv')
     layout = dash_table.DataTable(
         id='data-table',
         columns=[{"name": i, "id": i}
@@ -16,3 +16,5 @@ def DataTable():
         filter_action="native",
         page_size=20)
     return html.Div([layout])
+
+layout = DataTable()

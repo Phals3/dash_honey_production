@@ -6,7 +6,7 @@ import dash_bootstrap_components as dbc
 import plotly.express as px
 import pandas as pd
 
-df = pd.read_csv('honeyproduction.csv')
+df = pd.read_csv('assets/honeyproduction.csv')
 years = df['year'].unique()
 
 
@@ -42,3 +42,5 @@ def Map():
         ]
     )
     return body
+
+layout = Map()
