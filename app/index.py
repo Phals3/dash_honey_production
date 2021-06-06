@@ -4,7 +4,8 @@ from dash.dependencies import Input, Output
 
 from app import app
 from navbar import navbar
-from apps import homepage, data_table, map
+from apps import homepage, data_table, map, plots
+
 
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
@@ -22,6 +23,8 @@ def display_page(pathname):
         return data_table.layout
     elif pathname == '/apps/map':
         return map.layout
+    elif pathname == '/apps/plots':
+        return plots.layout
     else:
         return homepage.layout
 
