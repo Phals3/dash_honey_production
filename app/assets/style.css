@@ -7,6 +7,12 @@ body {
 .navbar {
     background-color: darkgoldenrod !important;
 }
+
+#navbar * {
+    color: white;
+}
+
+
 /* CONTENT DIV */
 #page-content {
     margin: 1%;
