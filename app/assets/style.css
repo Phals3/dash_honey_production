@@ -12,6 +12,10 @@ body {
     color: white;
 }
 
+a.nav-link:hover, .navbar-brand:hover {
+  color: black !important;
+}
+
 
 /* CONTENT DIV */
 #page-content {

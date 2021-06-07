@@ -10,7 +10,7 @@ def Navbar():
                 [dbc.Col(
                     html.Img(src='assets/bee_logo.svg', height="25px")),
                     dbc.Col(dbc.NavbarBrand(
-                        "Honey Production in USA", className="ml-2", href='/')), ],
+                        "Honey Production in USA",  href='/')), ],
             ),
             dbc.Nav([
                 dbc.NavItem(dbc.NavLink(
