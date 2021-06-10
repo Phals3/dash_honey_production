@@ -8,6 +8,7 @@ import pandas as pd
 
 from app import app
 
+
 def get_figure(year, column_name):
     rend_df = df[df['year'] == year]
     title = f'{column_name} in {year}'
@@ -27,17 +28,21 @@ def get_figure(year, column_name):
     )
     return fig
 
+
 df = pd.read_csv('assets/honeyproduction.csv')
 years = df['year'].unique()
 column_names = df.columns.drop(['year', 'state'])
 
 filter_div = html.Div(
-    [dcc.Dropdown(
+    [dcc.Slider(
         id='filter-years',
-        options=[{'label': i, 'value': i}
-                 for i in years],
-        value=years[0]
-    ), dcc.RadioItems(
+        min=df['year'].min(),
+        max=df['year'].max(),
+        value=df['year'].max(),
+        marks={str(year): str(year) for year in df['year'].unique()},
+        step=None
+    ),
+        dcc.RadioItems(
         id='filter-variable',
         options=[
             {'label': i, 'value': i} for i in column_names
@@ -46,7 +51,7 @@ filter_div = html.Div(
     )],
     id='filter-div')
 
-map_graph = dcc.Graph(id='map', figure=get_figure(1998, 'totalprod'))
+map_graph = dcc.Graph(id='map', figure=get_figure(years.max(), 'totalprod'))
 
 layout = html.Div(
     [filter_div,

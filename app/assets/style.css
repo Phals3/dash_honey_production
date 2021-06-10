@@ -35,7 +35,6 @@ a.nav-link:hover, .navbar-brand:hover {
     padding: 10px;
     color: white;
     width: 80%;
-    border: 0px;
 }
 
 #data-table th {
@@ -96,19 +95,25 @@ th .dash_filter {
 
 
 /* PLOTS */
+#plots-container {
+    margin: auto;
+    padding: 10px;
+    width: 80%;
+}
+
 #dropdowns {
     padding: 2%;
 }
 
-#filter-columns1 {
+
+.filter-dropdown {
     width: 49%;
     display: inline-block;
     color: black;
 }
 
-#filter-columns2 {
+#state-filter-div {
     width: 49%;
-    display: inline-block;
     color: black;
 }
 
@@ -124,6 +129,7 @@ th .dash_filter {
 
 #right-div {
     display: inline-block;
+    height: 70vh;
     width: 49%;
 }
 
@@ -133,4 +139,10 @@ th .dash_filter {
 
 #right-plot-2 {
     height: 35vh;
+}
+
+/* ADDITIONAL */
+
+.Select-control *{
+    background-color: rgb(219, 218, 215);
 }
