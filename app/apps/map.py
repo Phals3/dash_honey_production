@@ -11,7 +11,7 @@ from app import app
 
 def get_figure(year, column_name):
     rend_df = df[df['year'] == year]
-    title = f'{column_name} in {year}'
+    title = f'{column_name} in {year} in different US states'
     fig = px.choropleth(rend_df,
                         locations="state",
                         color=column_name,

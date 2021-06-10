@@ -11,6 +11,11 @@ from app import app
 df = pd.read_csv('assets/honeyproduction.csv')
 columns = df.columns.drop(['year', 'state'])
 states = df['state'].unique()
+df_grouped = df.groupby(['year']).sum().reset_index()
+
+avg_priceperlb = df.groupby(['year']).mean().reset_index()[['priceperlb']]
+df_grouped = df.groupby(['year']).sum().reset_index()
+df_grouped['priceperlb'] = avg_priceperlb
 
 
 def get_two_variables_plot(xaxis_column_name, yaxis_column_name, year):
@@ -21,7 +26,7 @@ def get_two_variables_plot(xaxis_column_name, yaxis_column_name, year):
     fig.update_yaxes(title=yaxis_column_name)
     fig.update_layout(
         title={'text': f"{yaxis_column_name} by {xaxis_column_name}",
-               'font': {'size': 12}},
+               'font': {'size': 15}},
         paper_bgcolor='rgba(0,0,0,0)',
         geo=dict(bgcolor='rgba(0,0,0,0)'),
         font_color="white",
@@ -30,16 +35,15 @@ def get_two_variables_plot(xaxis_column_name, yaxis_column_name, year):
     return fig
 
 
-def get_time_series(var_name, state):
-    dff = df[df['state'] == state]
-    fig = px.scatter(dff, x='year', y='totalprod')
+def get_time_series(var_name):
+    fig = px.scatter(df_grouped, x='year', y=var_name)
     fig.update_traces(mode='lines+markers')
     fig.update_yaxes(title=var_name, showgrid=False)
-    fig.add_annotation(x=0, y=0.85, xanchor='left', yanchor='bottom',
+    fig.add_annotation(x=0, y=1, xanchor='left', yanchor='top',
                        xref='paper', yref='paper', showarrow=False, align='left',
-                       bgcolor='rgba(255, 255, 255, 0.5)', text='title')
+                       bgcolor='rgba(255, 255, 255, 0.2)', text=f"Timeseries for overall {var_name}",
+                       font={'color':'black'})
     fig.update_layout(
-        title={'text': f"Timeseries for {var_name}", 'font': {'size': 12}},
         paper_bgcolor='rgba(0,0,0,0)',
         geo=dict(bgcolor='rgba(0,0,0,0)'),
         font_color="white",
@@ -50,6 +54,7 @@ def get_time_series(var_name, state):
 
 def Plots():
     layout = html.Div([
+        html.H3("Overall statistics", style={'margin-left':'50px'}),
         html.Div([
             html.Div([
                 dcc.Dropdown(
@@ -66,14 +71,7 @@ def Plots():
                     options=[{'label': i, 'value': i} for i in columns],
                     value=columns[2]
                 ),
-            ], className='filter-dropdown'),
-            html.Div([dcc.Dropdown(
-                options=[
-                    {'label': us_abbrev_state[s], 'value': s} for s in states
-                ],
-                id='state-filter',
-                value='AL',
-            )], id='state-filter-div')],
+            ], className='filter-dropdown')],
             id='dropdowns'),
 
         html.Div([
@@ -84,9 +82,9 @@ def Plots():
 
             html.Div([
                 dcc.Graph(id='right-plot-1',
-                          figure=get_time_series('totalprod', 'AL')),
+                          figure=get_time_series('totalprod')),
                 dcc.Graph(id='right-plot-2',
-                          figure=get_time_series('totalprod', 'AL'))],
+                          figure=get_time_series('totalprod'))],
                      id='right-div')],
             id='plots-dashboard'),
 
@@ -116,15 +114,13 @@ def update_left_figure(xaxis_column_name, yaxis_column_name, year):
 
 @ app.callback(
     Output('right-plot-1', 'figure'),
-    [Input('crossfilter-xaxis-column', 'value'),
-     Input('state-filter', 'value')])
-def update_x_timeseries(xaxis_column_name, state):
-    return get_time_series(xaxis_column_name, state)
+    Input('crossfilter-xaxis-column', 'value'))
+def update_x_timeseries(xaxis_column_name):
+    return get_time_series(xaxis_column_name)
 
 
 @ app.callback(
     Output('right-plot-2', 'figure'),
-    [Input('crossfilter-yaxis-column', 'value'),
-     Input('state-filter', 'value')])
-def update_y_timeseries(yaxis_column_name, state):
-    return get_time_series(yaxis_column_name, state)
+    Input('crossfilter-yaxis-column', 'value'))
+def update_y_timeseries(yaxis_column_name):
+    return get_time_series(yaxis_column_name)
