@@ -11,11 +11,13 @@ from app import app
 df = pd.read_csv('assets/honeyproduction.csv')
 columns = df.columns.drop(['year', 'state'])
 states = df['state'].unique()
-df_grouped = df.groupby(['year']).sum().reset_index()
 
-avg_priceperlb = df.groupby(['year']).mean().reset_index()[['priceperlb']]
+
+avg_priceperlb = df.groupby(['year']).mean().reset_index()['priceperlb']
+avg_yieldpercol = df.groupby(['year']).mean().reset_index()['yieldpercol']
 df_grouped = df.groupby(['year']).sum().reset_index()
 df_grouped['priceperlb'] = avg_priceperlb
+df_grouped['yieldpercol'] = avg_yieldpercol
 
 
 def get_two_variables_plot(xaxis_column_name, yaxis_column_name, year):
